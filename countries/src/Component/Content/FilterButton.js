@@ -26,19 +26,19 @@ export default function FilterButton() {
 
       <ul className={`${classes.listItems}  `} ref={list}>
         <li className={classes.item}>
-          <span class="item-text">Africa</span>
+          <span>Africa</span>
         </li>
         <li className={classes.item}>
-          <span class="item-text">America</span>
+          <span>America</span>
         </li>
         <li className={classes.item}>
-          <span class="item-text">Asia</span>
+          <span>Asia</span>
         </li>
         <li className={classes.item}>
-          <span class="item-text">Europe</span>
+          <span>Europe</span>
         </li>
         <li className={classes.item}>
-          <span class="item-text">Oceania</span>
+          <span>Oceania</span>
         </li>
       </ul>
     </div>

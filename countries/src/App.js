@@ -2,17 +2,14 @@ import "./App.css";
 import "react-material-symbols/dist/rounded.css";
 
 import Header from "./Component/Header/Header";
-import Filter from "./Component/Filter/Filter";
-import Countries from "./Component/Countries/Countries";
+import Content from "./Component/Content/Content";
 
 function App() {
   return (
     <div className="App">
       <main className="content">
         <Header></Header>
-
-        <Filter></Filter>
-        <Countries></Countries>
+        <Content></Content>
       </main>
     </div>
   );

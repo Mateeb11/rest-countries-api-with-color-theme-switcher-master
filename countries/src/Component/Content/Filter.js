@@ -5,11 +5,14 @@ import { MaterialSymbol } from "react-material-symbols";
 
 import FilterButton from "./FilterButton";
 
-const Filter = () => {
+const Filter = ({ setSearch }) => {
   const search = useRef("");
 
   const searchBoxHandler = () => {
     search.current.focus();
+  };
+  const searchHandler = (event) => {
+    setSearch(event.target.value);
   };
   return (
     <section className={classes.container}>
@@ -23,6 +26,7 @@ const Filter = () => {
           type="text"
           placeholder="Search for a country..."
           ref={search}
+          onChange={searchHandler}
         />
       </form>
       <FilterButton />

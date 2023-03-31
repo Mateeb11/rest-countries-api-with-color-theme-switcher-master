@@ -1,20 +1,26 @@
 import { useState, useEffect, useCallback } from "react";
 
-import classes from "./Countries.module.css";
+import Countries from "./Countries";
+import Filter from "./Filter";
 
-const Countries = () => {
+import classes from "./Content.module.css";
+
+export default function Content() {
   const [countries, setCountries] = useState([]);
+  const [search, setSearch] = useState("");
 
-  const fetchCountries = useCallback(async () => {
+  const fetchCountries = async (url) => {
     try {
-      const response = await fetch(
-        "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
-      );
+      const response = await fetch(url);
+
       if (!response.ok) {
         throw new Error("Error");
+      } else if (response.status === 404) {
+        throw new Error("Error 404");
       }
+
       const data = await response.json();
-      console.log(data[0]);
+      // console.log(data[0]);
       const loadedCountries = [];
       for (const key in data) {
         const nativeName = data[key].name.nativeName;
@@ -58,37 +64,19 @@ const Countries = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  };
 
   useEffect(() => {
-    fetchCountries();
-  }, [fetchCountries]);
+    const url =
+      search === ""
+        ? "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
+        : `https://restcountries.com/v3.1/name/${search}?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders`;
+    fetchCountries(url);
+  }, [search]);
   return (
     <main className={classes.container}>
-      {countries.map((countrie) => (
-        <section key={countrie.id} className={classes.card}>
-          <img src={countrie.flag} alt={countrie.altText} />
-          <div className={classes.info}>
-            <p className={classes.name}>{countrie.officalName}</p>
-            <div>
-              <p className={classes.status}>
-                <span>Population: </span>
-                {countrie.population}
-              </p>
-              <p className={classes.status}>
-                <span>Region: </span>
-                {countrie.region}
-              </p>
-              <p className={classes.status}>
-                <span>Capital: </span>
-                {countrie.capital}
-              </p>
-            </div>
-          </div>
-        </section>
-      ))}
+      <Filter setSearch={setSearch}></Filter>
+      <Countries countries={countries}></Countries>
     </main>
   );
-};
-
-export default Countries;
+}
