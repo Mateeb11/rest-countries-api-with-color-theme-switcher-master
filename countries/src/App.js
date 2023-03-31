@@ -1,4 +1,5 @@
 import "./App.css";
+import "react-material-symbols/dist/rounded.css";
 
 import Header from "./Component/Header/Header";
 import Filter from "./Component/Filter/Filter";
