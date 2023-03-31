@@ -1,3 +1,58 @@
-.white {
+.container {
     color: white;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    gap: 4em;
+   max-width: 90%;
+    margin: auto;
+    
+    
+}
+
+
+.card{
+    background-color: var(--dark-blue);
+    display: flex;
+    flex-direction: column;
+   
+    
+}
+.card , img {
+    aspect-ratio: 3/2;
+}
+.card  p {
+    overflow: hidden;
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1.5em;
+    padding-bottom: 2.5em;
+    line-height: 1.5;
+}
+
+
+.name {
+    font-weight: var(--font-weigts-bold);
+    font-size: var(--font-size-large);
+    overflow: hidden;
+
+    
+}
+
+.status ,span{
+    font-weight: var(--font-weigts-regular);
+    
+}
+
+.status {
+    font-weight: var(--font-weigts-light);
+    
 }

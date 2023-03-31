@@ -1,6 +1,8 @@
 .header{
     background-color: var(--dark-blue);
-    
+    display: flex;
+    justify-content: space-between;
+    padding: 2em;
 }
 
 .title{

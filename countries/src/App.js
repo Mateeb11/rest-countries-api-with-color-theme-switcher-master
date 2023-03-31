@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <main className="content">
         <Header></Header>
+
         <Filter></Filter>
         <Countries></Countries>
       </main>
