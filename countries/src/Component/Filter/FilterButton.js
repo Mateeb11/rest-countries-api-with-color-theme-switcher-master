@@ -19,48 +19,26 @@ export default function FilterButton() {
         className={`${classes.selectBtn} ${isClicked && classes.open}`}
         onClick={filterHandler}
       >
-        <span className={classes.btnTex}>Languages</span>
-        <span className={classes.arrowDwn}>
-          <MaterialSymbol
-            icon="expand_circle_down"
-            size={20}
-            fill
-            style={{ color: "rgb(91, 73, 255)" }}
-            className={classes.arrowDwn}
-          />
-        </span>
+        <span className={classes.btnText}>Filter by region</span>
+
+        <MaterialSymbol icon="expand_more" size={20} color="white" />
       </div>
 
       <ul className={`${classes.listItems}  `} ref={list}>
         <li className={classes.item}>
-          <span className={classes.checkbox}>
-            <i class="fa-solid fa-check check-icon"></i>
-          </span>
-          <span class="item-text">French</span>
+          <span class="item-text">Africa</span>
         </li>
         <li className={classes.item}>
-          <span className={classes.checkbox}>
-            <i class="fa-solid fa-check check-icon"></i>
-          </span>
-          <span class="item-text">English</span>
+          <span class="item-text">America</span>
         </li>
         <li className={classes.item}>
-          <span className={classes.checkbox}>
-            <i class="fa-solid fa-check check-icon"></i>
-          </span>
-          <span class="item-text">English</span>
+          <span class="item-text">Asia</span>
         </li>
         <li className={classes.item}>
-          <span className={classes.checkbox}>
-            <i class="fa-solid fa-check check-icon"></i>
-          </span>
-          <span class="item-text">English</span>
+          <span class="item-text">Europe</span>
         </li>
         <li className={classes.item}>
-          <span className={classes.checkbox}>
-            <i class="fa-solid fa-check check-icon"></i>
-          </span>
-          <span class="item-text">English</span>
+          <span class="item-text">Oceania</span>
         </li>
       </ul>
     </div>
