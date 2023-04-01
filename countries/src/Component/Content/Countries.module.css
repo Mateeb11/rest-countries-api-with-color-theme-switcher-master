@@ -6,10 +6,25 @@
     gap: 4em;
     max-width: 90%;
     margin: auto;
-
-   
 }
 
+@media (max-width:1200px){
+    .container{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width:950px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+        
+    }
+}
+@media (max-width:620px) {
+    .container {
+        grid-template-columns: repeat(1, 1fr);
+        padding-inline: 2em;
+    }
+}
 
 .card{
     background-color: var(--dark-blue);
@@ -24,6 +39,7 @@
 .card img {
     aspect-ratio: 3/2;
     border-radius:.5em;
+    
 }
 .card  p {
     overflow: hidden;
@@ -51,12 +67,14 @@
     
 }
 
-.status span{
+.status{
     font-weight: var(--font-weigts-regular);
     font-size: var(--font-size-medium);
+  
 }
-
-.status {
+.status span{
     font-weight: var(--font-weigts-light);
     font-size: var(--font-size-medium);
+    opacity: .8;
 }
+

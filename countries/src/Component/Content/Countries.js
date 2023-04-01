@@ -10,16 +10,16 @@ const Countries = ({ countries }) => {
             <p className={classes.name}>{countrie.officalName}</p>
             <div>
               <p className={classes.status}>
-                <span>Population: </span>
-                {countrie.population}
+                Population:
+                <span> {countrie.population.toLocaleString()}</span>
               </p>
               <p className={classes.status}>
-                <span>Region: </span>
-                {countrie.region}
+                Region:
+                <span> {countrie.region}</span>
               </p>
               <p className={classes.status}>
-                <span>Capital: </span>
-                {countrie.capital}
+                Capital:
+                <span> {countrie.capital}</span>
               </p>
             </div>
           </div>
