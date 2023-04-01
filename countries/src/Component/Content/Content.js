@@ -8,9 +8,12 @@ import classes from "./Content.module.css";
 
 export default function Content() {
   const [countries, setCountries] = useState([]);
-  const [notFound, setNotFound] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   const [search, setSearch] = useState("");
+
+  const [erorr, setErorr] = useState(false);
+  const [errorMessage, setErorrMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchCountries = async (url) => {
     setLoading(true);
@@ -18,11 +21,12 @@ export default function Content() {
       const response = await fetch(url, { method: "GET" });
 
       if (!response.ok) {
-        throw new Error(response.status);
+        if (response.statusText === "Not Found") {
+          throw new Error("Found no country.");
+        }
       }
 
       const data = await response.json();
-      // console.log(data[0]);
       const loadedCountries = [];
       for (const key in data) {
         const nativeName = data[key].name.nativeName;
@@ -61,12 +65,15 @@ export default function Content() {
       //   languages: data[0].languages.eng,
       //   borders: data[0].borders || "none",
       // });
-      setNotFound(false);
+      setErorr(false);
       setCountries(loadedCountries);
+
       setLoading(false);
     } catch (error) {
-      console.log(error);
-      setNotFound(true);
+      if (error.message === "Failed to fetch")
+        setErorrMessage("Something went wrong, try refreshing the page.");
+      else setErorrMessage(error.message);
+      setErorr(true);
     }
   };
 
@@ -85,17 +92,24 @@ export default function Content() {
     </>
   );
 
-  if (notFound) {
-    content = <div className={classes.notFound}>Found no country</div>;
+  if (erorr) {
+    content = (
+      <div className={classes.centerStatus}>{errorMessage.toString()}</div>
+    );
   } else if (loading) {
-    content = <Loader color="white" />;
+    content = (
+      <div className={classes.centerStatus}>
+        <Loader color="white" />
+      </div>
+    );
   } else {
     content = <Countries countries={countries}></Countries>;
   }
   return (
     <main className={classes.container}>
       <Filter setSearch={setSearch}></Filter>
-      {content}
+
+      <div className={classes.content}>{content}</div>
     </main>
   );
 }
