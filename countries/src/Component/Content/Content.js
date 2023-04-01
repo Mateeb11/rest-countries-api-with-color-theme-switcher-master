@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import Loader from "react-loading-indicators";
 
 import Countries from "./Countries";
 import Filter from "./Filter";
@@ -7,16 +8,17 @@ import classes from "./Content.module.css";
 
 export default function Content() {
   const [countries, setCountries] = useState([]);
+  const [notFound, setNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
   const fetchCountries = async (url) => {
+    setLoading(true);
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { method: "GET" });
 
       if (!response.ok) {
-        throw new Error("Error");
-      } else if (response.status === 404) {
-        throw new Error("Error 404");
+        throw new Error(response.status);
       }
 
       const data = await response.json();
@@ -59,10 +61,12 @@ export default function Content() {
       //   languages: data[0].languages.eng,
       //   borders: data[0].borders || "none",
       // });
-
+      setNotFound(false);
       setCountries(loadedCountries);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setNotFound(true);
     }
   };
 
@@ -73,10 +77,25 @@ export default function Content() {
         : `https://restcountries.com/v3.1/name/${search}?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders`;
     fetchCountries(url);
   }, [search]);
+
+  let content = (
+    <>
+      <Filter setSearch={setSearch}></Filter>
+      <Countries countries={countries}></Countries>
+    </>
+  );
+
+  if (notFound) {
+    content = <div className={classes.notFound}>Found no country</div>;
+  } else if (loading) {
+    content = <Loader color="white" />;
+  } else {
+    content = <Countries countries={countries}></Countries>;
+  }
   return (
     <main className={classes.container}>
       <Filter setSearch={setSearch}></Filter>
-      <Countries countries={countries}></Countries>
+      {content}
     </main>
   );
 }
