@@ -15,7 +15,7 @@ export default function Content() {
   const [errorMessage, setErorrMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fetchCountries = async (url) => {
+  const fetchCountries = useCallback(async (url) => {
     setLoading(true);
     try {
       const response = await fetch(url, { method: "GET" });
@@ -75,6 +75,14 @@ export default function Content() {
       else setErorrMessage(error.message);
       setErorr(true);
     }
+  });
+
+  const filterCountries = () => {
+    let tempArray = countries.filter((countrie) => {
+      if (countrie.region === "Africa") return countrie;
+    });
+
+    setCountries(tempArray);
   };
 
   useEffect(() => {
@@ -107,7 +115,7 @@ export default function Content() {
   }
   return (
     <main className={classes.container}>
-      <Filter setSearch={setSearch}></Filter>
+      <Filter setSearch={setSearch} filterCountries={filterCountries}></Filter>
 
       <div className={classes.content}>{content}</div>
     </main>

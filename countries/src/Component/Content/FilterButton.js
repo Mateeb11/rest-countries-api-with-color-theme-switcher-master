@@ -24,7 +24,7 @@ export default function FilterButton() {
         <MaterialSymbol icon="expand_more" size={20} color="white" />
       </div>
 
-      <ul className={`${classes.listItems}  `} ref={list}>
+      <ul className={`${classes.listItems}`} ref={list}>
         <li className={classes.item}>
           <span>Africa</span>
         </li>
