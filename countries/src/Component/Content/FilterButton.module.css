@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    user-select: none;
 }
 
 .selectBtn{
@@ -29,10 +29,12 @@
     font-weight: var(--font-weigts-light);
     color: var(--white);
     opacity: .75;
+    
 }
 .selectBtnn .arrowDwn {
     display: flex;
     align-items: center;
+    
 }
 
 .listItems {
@@ -42,17 +44,22 @@
     border-radius: 8px;
     
     background-color: var(--dark-blue);
-    transition: background-color 0.5s ease;
+    
+    transform: scale(0.01);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.5s ease;
+    transform-origin: center top;
 
-    display: none;
+    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.07);
 }
 
 .selectBtn.open ~ .listItems {
-    display: block;
-    
-    flex-direction: column;
     
     color: var(--white);
+    transform: scale(1);
+        opacity: 1;
 }
 
 .listItems .item {
@@ -60,7 +67,7 @@
     
     text-align: right;
     cursor: pointer;
-    padding: 1em 7.5em 1em 1em;
+    padding: 1em 7.2em 1em 1em;
    
 }
 .listItems .item:hover {

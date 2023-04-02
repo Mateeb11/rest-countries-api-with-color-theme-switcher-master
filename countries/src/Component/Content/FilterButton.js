@@ -8,8 +8,6 @@ export default function FilterButton({ mode }) {
 
   const filterHandler = () => {
     isClicked ? setIsClicked(false) : setIsClicked(true);
-
-    console.log(list.current);
   };
 
   const list = useRef(null);
@@ -29,7 +27,29 @@ export default function FilterButton({ mode }) {
           icon="expand_more"
           size={20}
           style={
-            mode ? { color: "var(--very-dark-blue-text)" } : { color: "white" }
+            mode
+              ? isClicked
+                ? {
+                    color: "var(--very-dark-blue-text)",
+                    transform: "rotate(-180deg)",
+                    transition: "transform .5s ease",
+                  }
+                : {
+                    color: "var(--very-dark-blue-text)",
+                    transform: "rotate(0deg)",
+                    transition: "transform .5s ease",
+                  }
+              : isClicked
+              ? {
+                  color: "white",
+                  transform: "rotate(-180deg)",
+                  transition: "transform .5s ease",
+                }
+              : {
+                  color: "white",
+                  transform: "rotate(0deg)",
+                  transition: "transform .5s ease",
+                }
           }
         />
       </div>
