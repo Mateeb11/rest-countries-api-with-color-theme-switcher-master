@@ -3,18 +3,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .selectBtn{
-        display: flex;
-            gap: 1em;
-            align-items: center;
-            
-            padding: 1.25em 1em 1.25em 2em;
-            
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: var(--dark-blue);
+    display: flex;
+    gap: 1em;
+    align-items: center;
+
+    padding: 1.25em 1em 1.25em 2em;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    background-color: var(--dark-blue);
+    transition: background-color 0.5s ease;
+
+    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.07);
             
 }
 
@@ -35,9 +42,8 @@
     border-radius: 8px;
     
     background-color: var(--dark-blue);
-    
-    
-    
+    transition: background-color 0.5s ease;
+
     display: none;
 }
 
@@ -54,10 +60,21 @@
     
     text-align: right;
     cursor: pointer;
-    transition: 0.3s;
     padding: 1em 7.5em 1em 1em;
    
 }
 .listItems .item:hover {
-    background-color: var(--very-dark-blue)
+    background-color: var(--very-dark-blue);
+    transition: background-color 0.5s ease;
+}
+.listItems .item.lightMode:hover{
+    background-color: rgb(238, 238, 238);
+}
+
+.selectBtn.lightMode, .listItems.lightMode{
+    background-color: var(--white);
+}
+
+.btnText.lightMode, .selectBtn.open~.listItems.lightMode{
+    color: var(--very-dark-blue-text);
 }

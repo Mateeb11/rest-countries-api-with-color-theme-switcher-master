@@ -1,10 +1,13 @@
 import classes from "./Countries.module.css";
 
-const Countries = ({ countries }) => {
+const Countries = ({ countries, mode }) => {
   return (
-    <main className={classes.container}>
+    <main className={`${classes.container} ${mode && classes.lightMode}`}>
       {countries.map((countrie) => (
-        <section key={countrie.id} className={classes.card}>
+        <section
+          key={countrie.id}
+          className={`${classes.card} ${mode && classes.lightMode}`}
+        >
           <img src={countrie.flag} alt={countrie.altText} />
           <div className={classes.info}>
             <p className={classes.name}>{countrie.officalName}</p>

@@ -6,7 +6,7 @@ import Filter from "./Filter";
 
 import classes from "./Content.module.css";
 
-export default function Content() {
+export default function Content({ mode }) {
   const [countries, setCountries] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -102,20 +102,30 @@ export default function Content() {
 
   if (erorr) {
     content = (
-      <div className={classes.centerStatus}>{errorMessage.toString()}</div>
+      <div className={`${classes.centerStatus} ${mode && classes.lightMode}`}>
+        {errorMessage.toString()}
+      </div>
     );
   } else if (loading) {
     content = (
       <div className={classes.centerStatus}>
-        <Loader color="white" />
+        {mode ? (
+          <Loader style={{ color: "var(--very-dark-blue-text)" }} />
+        ) : (
+          <Loader color="white" />
+        )}
       </div>
     );
   } else {
-    content = <Countries countries={countries}></Countries>;
+    content = <Countries countries={countries} mode={mode}></Countries>;
   }
   return (
     <main className={classes.container}>
-      <Filter setSearch={setSearch} filterCountries={filterCountries}></Filter>
+      <Filter
+        setSearch={setSearch}
+        filterCountries={filterCountries}
+        mode={mode}
+      ></Filter>
 
       <div className={classes.content}>{content}</div>
     </main>

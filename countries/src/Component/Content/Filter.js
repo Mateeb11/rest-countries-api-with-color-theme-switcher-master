@@ -5,7 +5,7 @@ import { MaterialSymbol } from "react-material-symbols";
 
 import FilterButton from "./FilterButton";
 
-const Filter = ({ setSearch }) => {
+const Filter = ({ setSearch, mode }) => {
   const search = useRef("");
 
   const searchBoxHandler = () => {
@@ -15,21 +15,37 @@ const Filter = ({ setSearch }) => {
     setSearch(event.target.value);
   };
   return (
-    <section className={classes.container}>
-      <form className={classes.searchBox} onClick={searchBoxHandler}>
-        <button className={classes.searchButton}>
-          <MaterialSymbol icon="search" color="white" size={20} />
+    <section className={`${classes.container}`}>
+      <form
+        className={`${classes.searchBox}  ${mode && classes.lightMode}`}
+        onClick={searchBoxHandler}
+      >
+        <button
+          className={`${classes.searchButton}  ${mode && classes.lightMode}`}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <MaterialSymbol
+            icon="search"
+            style={
+              mode
+                ? { color: "var(--very-dark-blue-text)" }
+                : { color: "white" }
+            }
+            size={20}
+          />
         </button>
 
         <input
-          className={classes.searchInput}
+          className={`${classes.searchInput}  ${mode && classes.lightMode}`}
           type="text"
           placeholder="Search for a country..."
           ref={search}
           onChange={searchHandler}
         />
       </form>
-      <FilterButton />
+      <FilterButton mode={mode} />
     </section>
   );
 };
