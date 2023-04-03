@@ -8,8 +8,10 @@ import classes from "./Content.module.css";
 
 export default function Content({ mode }) {
   const [countries, setCountries] = useState([]);
+  const [filterdCountries, setFilterdCountries] = useState([]);
 
   const [search, setSearch] = useState("");
+  const [region, setRegion] = useState([]);
 
   const [erorr, setErorr] = useState(false);
   const [errorMessage, setErorrMessage] = useState("");
@@ -18,13 +20,9 @@ export default function Content({ mode }) {
   const fetchCountries = useCallback(async (url) => {
     setLoading(true);
     try {
-      const response = await fetch(url, { method: "GET" });
-
-      if (!response.ok) {
-        if (response.statusText === "Not Found") {
-          throw new Error("Found no country.");
-        }
-      }
+      const response = await fetch(
+        "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
+      );
 
       const data = await response.json();
       const loadedCountries = [];
@@ -39,6 +37,7 @@ export default function Content({ mode }) {
             Object.keys(data[key].name.nativeName).length === 0
               ? "None"
               : Object.values(nativeName)[0].official,
+          commonName: data[key].name.common,
           population: data[key].population,
           region: data[key].region,
           subregion: data[key].subregion,
@@ -49,25 +48,10 @@ export default function Content({ mode }) {
           borders: data[key].borders,
         });
       }
-      // const nativeName = data[0].name.nativeName;
-      // loadedCountries.push({
-      //   id: 0,
-      //   flag: data[0].flags.png,
-      //   altText: data[0].flags.alt,
-      //   officalName: data[0].name.official,
-      //   nativeName: Object.values(nativeName)[0].official,
-      //   population: data[0].population,
-      //   region: data[0].region,
-      //   subregion: data[0].subregion,
-      //   capital: data[0].capital,
-      //   tld: data[0].tld,
-      //   currencies: data[0].currencies.BBD.name,
-      //   languages: data[0].languages.eng,
-      //   borders: data[0].borders || "none",
-      // });
+
       setErorr(false);
       setCountries(loadedCountries);
-
+      setFilterdCountries(loadedCountries);
       setLoading(false);
     } catch (error) {
       if (error.message === "Failed to fetch")
@@ -77,30 +61,48 @@ export default function Content({ mode }) {
     }
   });
 
-  const filterCountries = () => {
-    let tempArray = countries.filter((countrie) => {
-      if (countrie.region === "Africa") return countrie;
-    });
-
-    setCountries(tempArray);
+  const filterCountries = (search, region) => {
+    let tempArray = [];
+    if (search === "") {
+      setFilterdCountries(countries);
+    } else {
+      for (const key in countries) {
+        if (
+          countries[key].officalName
+            .toLowerCase()
+            .match(search.toLowerCase()) ||
+          countries[key].commonName.toLowerCase().match(search.toLowerCase())
+        ) {
+          tempArray.push({ ...countries[key] });
+        }
+      }
+      if (tempArray.length === 0) {
+        setErorr(true);
+        setErorrMessage("Found no country.");
+      } else {
+        setErorr(false);
+      }
+      setFilterdCountries(tempArray);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    const url =
-      search === ""
-        ? "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
-        : `https://restcountries.com/v3.1/name/${search}?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders`;
-    fetchCountries(url);
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    filterCountries(search);
   }, [search]);
 
   let content = (
     <>
-      <Filter setSearch={setSearch}></Filter>
+      <Filter setSearch={setSearch} setRegion={setRegion}></Filter>
       <Countries countries={countries}></Countries>
     </>
   );
 
-  if (erorr) {
+  if (errorMessage === "Something went wrong, try refreshing the page.") {
     content = (
       <div className={`${classes.centerStatus} ${mode && classes.lightMode}`}>
         {errorMessage.toString()}
@@ -117,16 +119,27 @@ export default function Content({ mode }) {
       </div>
     );
   } else {
-    content = <Countries countries={countries} mode={mode}></Countries>;
+    content = (
+      <>
+        <Filter
+          setSearch={setSearch}
+          filterCountries={filterCountries}
+          mode={mode}
+        ></Filter>
+        {erorr ? (
+          <div
+            className={`${classes.centerStatus} ${mode && classes.lightMode}`}
+          >
+            {errorMessage.toString()}
+          </div>
+        ) : (
+          <Countries countries={filterdCountries} mode={mode}></Countries>
+        )}
+      </>
+    );
   }
   return (
     <main className={classes.container}>
-      <Filter
-        setSearch={setSearch}
-        filterCountries={filterCountries}
-        mode={mode}
-      ></Filter>
-
       <div className={classes.content}>{content}</div>
     </main>
   );
