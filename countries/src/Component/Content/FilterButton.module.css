@@ -64,10 +64,11 @@
 
 .listItems .item {
     display: flex;
-    
-    text-align: right;
+    align-items: center;
+    width: 11.9em;
+    justify-content: space-between;
     cursor: pointer;
-    padding: 1em 7.2em 1em 1em;
+    padding: 1em 1em 1em 1em;
    
 }
 .listItems .item:hover {
