@@ -18,7 +18,7 @@ const Header = ({ mode, setMode }) => {
             size={24}
             style={{
               color: "var(--very-dark-blue-text)",
-              transition: "all 0.5s ease-in-out",
+              transition: "all 1.5s ease-in-out",
             }}
           />
           Dark mode
@@ -29,7 +29,7 @@ const Header = ({ mode, setMode }) => {
             icon="light_mode"
             style={{
               color: "var(--white)",
-              transition: "all 0.5s ease-in-out",
+              transition: "all 1.5s ease-in-out",
             }}
             size={24}
             fill
