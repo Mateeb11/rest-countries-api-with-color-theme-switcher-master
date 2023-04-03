@@ -11,7 +11,7 @@ export default function Content({ mode }) {
   const [filterdCountries, setFilterdCountries] = useState([]);
 
   const [search, setSearch] = useState("");
-  const [region, setRegion] = useState([]);
+  const [regions, setRegions] = useState([]);
 
   const [erorr, setErorr] = useState(false);
   const [errorMessage, setErorrMessage] = useState("");
@@ -61,10 +61,13 @@ export default function Content({ mode }) {
     }
   });
 
-  const filterCountries = (search, region) => {
-    let tempArray = [];
+  const filterCountries = (search, regions) => {
+    let searchArray = [];
     if (search === "") {
-      setFilterdCountries(countries);
+      for (const key in countries) {
+        searchArray.push({ ...countries[key] });
+      }
+      setFilterdCountries(searchArray);
     } else {
       for (const key in countries) {
         if (
@@ -73,17 +76,34 @@ export default function Content({ mode }) {
             .match(search.toLowerCase()) ||
           countries[key].commonName.toLowerCase().match(search.toLowerCase())
         ) {
-          tempArray.push({ ...countries[key] });
+          searchArray.push({ ...countries[key] });
         }
       }
-      if (tempArray.length === 0) {
+      if (searchArray.length === 0) {
         setErorr(true);
         setErorrMessage("Found no country.");
       } else {
         setErorr(false);
       }
-      setFilterdCountries(tempArray);
-      setLoading(false);
+    }
+    let regionArray = [];
+    if (regions.length > 0) {
+      for (const key in searchArray) {
+        for (const region in regions) {
+          if (searchArray[key].region === regions[region]) {
+            regionArray.push({ ...searchArray[key] });
+          }
+        }
+      }
+      if (regionArray.length === 0) {
+        setErorr(true);
+        setErorrMessage("Found no country.");
+      } else {
+        setErorr(false);
+        setFilterdCountries(regionArray);
+      }
+    } else {
+      setFilterdCountries(searchArray);
     }
   };
 
@@ -92,15 +112,11 @@ export default function Content({ mode }) {
   }, []);
 
   useEffect(() => {
-    filterCountries(search);
-  }, [search]);
+    filterCountries(search, regions);
+    console.log("hi");
+  }, [search, regions]);
 
-  let content = (
-    <>
-      <Filter setSearch={setSearch} setRegion={setRegion}></Filter>
-      <Countries countries={countries}></Countries>
-    </>
-  );
+  let content = <></>;
 
   if (errorMessage === "Something went wrong, try refreshing the page.") {
     content = (
@@ -125,6 +141,7 @@ export default function Content({ mode }) {
           setSearch={setSearch}
           filterCountries={filterCountries}
           mode={mode}
+          setRegions={setRegions}
         ></Filter>
         {erorr ? (
           <div

@@ -5,7 +5,7 @@ import { MaterialSymbol } from "react-material-symbols";
 
 import FilterButton from "./FilterButton";
 
-const Filter = ({ setSearch, mode }) => {
+const Filter = ({ setSearch, setRegions, mode }) => {
   const search = useRef("");
 
   const searchBoxHandler = () => {
@@ -45,7 +45,7 @@ const Filter = ({ setSearch, mode }) => {
           onChange={searchHandler}
         />
       </form>
-      <FilterButton mode={mode} />
+      <FilterButton mode={mode} setRegions={setRegions} />
     </section>
   );
 };
