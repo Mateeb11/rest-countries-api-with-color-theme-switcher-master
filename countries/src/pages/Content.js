@@ -32,7 +32,7 @@ export default function Content() {
         "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
       );
     }
-    setFilterdCountries(countries);
+    filterCountries(search, regions);
   }, [countries]);
 
   const filterCountries = (search, regions) => {

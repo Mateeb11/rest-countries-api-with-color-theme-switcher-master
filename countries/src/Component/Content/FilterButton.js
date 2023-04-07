@@ -7,6 +7,7 @@ let regions = [];
 
 export default function FilterButton({ mode, setRegions }) {
   const [isClicked, setIsClicked] = useState(false);
+  const [buttonText, setButtonText] = useState("Filter by region");
 
   const [africa, setAfrica] = useState(false);
   const [americas, setAmericas] = useState(false);
@@ -31,6 +32,13 @@ export default function FilterButton({ mode, setRegions }) {
       setOceania(!oceania);
     }
   };
+  useEffect(() => {
+    setRegions(regions);
+    for (let i = 0; i < regions.length; i++) {
+      checkboxHandler(regions[i]);
+    }
+    numberOfRegions();
+  }, []);
 
   const regionFilter = (region) => {
     if (!regions.includes(region)) {
@@ -41,28 +49,28 @@ export default function FilterButton({ mode, setRegions }) {
 
     checkboxHandler(region);
 
-    console.log(regions);
     setRegions(regions);
+    numberOfRegions();
   };
 
   const numberOfRegions = () => {
     if (regions.length === 0) {
-      return "Fitler by region";
+      setButtonText("Fitler by region");
     }
     if (regions.length === 1) {
-      return "1 Selected";
+      setButtonText("1 Selected");
     }
     if (regions.length === 2) {
-      return "2 Selected";
+      setButtonText("2 Selected");
     }
     if (regions.length === 3) {
-      return "3 Selected";
+      setButtonText("3 Selected");
     }
     if (regions.length === 4) {
-      return "4 Selected";
+      setButtonText("4 Selected");
     }
     if (regions.length === 5) {
-      return "All Selected";
+      setButtonText("All Selected");
     }
   };
 
@@ -75,7 +83,7 @@ export default function FilterButton({ mode, setRegions }) {
         onClick={showFilterHandler}
       >
         <span className={`${classes.btnText} ${mode && classes.lightMode}`}>
-          {numberOfRegions()}
+          {buttonText}
         </span>
 
         <MaterialSymbol

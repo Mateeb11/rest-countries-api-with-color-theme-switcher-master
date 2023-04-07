@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import classes from "./Filter.module.css";
 import { MaterialSymbol } from "react-material-symbols";
 
 import FilterButton from "./FilterButton";
 
-const Filter = ({ setSearch, setRegions, mode }) => {
+const Filter = ({ setSearch, setRegions, mode, searchValue }) => {
   const search = useRef("");
 
   const searchBoxHandler = () => {
