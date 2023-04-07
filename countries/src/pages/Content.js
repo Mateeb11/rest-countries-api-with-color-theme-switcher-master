@@ -3,67 +3,37 @@ import { useSelector } from "react-redux";
 
 import Loader from "react-loading-indicators";
 
-import Countries from "./Countries";
-import Filter from "./Filter";
+import Countries from "../Component/Content/Countries";
+import Filter from "../Component/Content/Filter";
 
 import classes from "./Content.module.css";
+import useRequest from "../hooks/use-request";
 
 export default function Content() {
   const mode = useSelector((state) => state.mode.colorMode);
 
-  const [countries, setCountries] = useState([]);
-  const [filterdCountries, setFilterdCountries] = useState([]);
+  const {
+    countries,
+    loading,
+    fetchCountries,
+    error,
+    errorMessage,
+    setErorr,
+    setErorrMessage,
+  } = useRequest();
 
+  const [filterdCountries, setFilterdCountries] = useState([]);
   const [search, setSearch] = useState("");
   const [regions, setRegions] = useState([]);
 
-  const [erorr, setErorr] = useState(false);
-  const [errorMessage, setErorrMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const fetchCountries = useCallback(async (url) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
+  useEffect(() => {
+    if (countries.length === 0) {
+      fetchCountries(
         "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
       );
-
-      const data = await response.json();
-      const loadedCountries = [];
-      for (const key in data) {
-        const nativeName = data[key].name.nativeName;
-        loadedCountries.push({
-          id: key,
-          flag: data[key].flags.png,
-          altText: data[key].flags.alt,
-          officalName: data[key].name.official,
-          nativeName:
-            Object.keys(data[key].name.nativeName).length === 0
-              ? "None"
-              : Object.values(nativeName)[0].official,
-          commonName: data[key].name.common,
-          population: data[key].population,
-          region: data[key].region,
-          subregion: data[key].subregion,
-          capital: data[key].capital,
-          tld: data[key].tld,
-          currecies: data[key].BBD,
-          // languages: data[key].div,
-          borders: data[key].borders,
-        });
-      }
-
-      setErorr(false);
-      setCountries(loadedCountries);
-      setFilterdCountries(loadedCountries);
-      setLoading(false);
-    } catch (error) {
-      if (error.message === "Failed to fetch")
-        setErorrMessage("Something went wrong, try refreshing the page.");
-      else setErorrMessage(error.message);
-      setErorr(true);
     }
-  });
+    setFilterdCountries(countries);
+  }, [countries]);
 
   const filterCountries = (search, regions) => {
     let searchArray = [];
@@ -112,12 +82,7 @@ export default function Content() {
   };
 
   useEffect(() => {
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
     filterCountries(search, regions);
-    console.log("hi");
   }, [search, regions]);
 
   let content = <></>;
@@ -147,7 +112,7 @@ export default function Content() {
           mode={mode}
           setRegions={setRegions}
         ></Filter>
-        {erorr ? (
+        {error ? (
           <div
             className={`${classes.centerStatus} ${mode && classes.lightMode}`}
           >
