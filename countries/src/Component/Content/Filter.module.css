@@ -4,6 +4,7 @@
     align-items: center;
     max-width: 90%;
     margin: auto;
+   
 }
 
 .searchBox {
@@ -74,6 +75,8 @@ outline: none;
     border-radius: .5em;
     border: 0;
     border-right: 16px solid transparent;
+
+    
     
 }
 .dropList:active {

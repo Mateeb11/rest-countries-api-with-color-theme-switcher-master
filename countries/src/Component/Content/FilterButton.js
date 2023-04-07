@@ -45,6 +45,27 @@ export default function FilterButton({ mode, setRegions }) {
     setRegions(regions);
   };
 
+  const numberOfRegions = () => {
+    if (regions.length === 0) {
+      return "Fitler by region";
+    }
+    if (regions.length === 1) {
+      return "1 Selected";
+    }
+    if (regions.length === 2) {
+      return "2 Selected";
+    }
+    if (regions.length === 3) {
+      return "3 Selected";
+    }
+    if (regions.length === 4) {
+      return "4 Selected";
+    }
+    if (regions.length === 5) {
+      return "All Selected";
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div
@@ -54,7 +75,7 @@ export default function FilterButton({ mode, setRegions }) {
         onClick={showFilterHandler}
       >
         <span className={`${classes.btnText} ${mode && classes.lightMode}`}>
-          Filter by region
+          {numberOfRegions()}
         </span>
 
         <MaterialSymbol
