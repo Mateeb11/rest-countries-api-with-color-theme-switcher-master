@@ -38,18 +38,7 @@
   box-sizing: border-box;
 }
 
-.App {
-background-color: var(--very-dark-blue);
-transition: background-color 0.5s ease;
- 
-}
-.App.lightMode{
-  background-color:var(--very-light-gray)
-}
-.content{
-  max-width: var(--desktop);
-  margin: auto;
-}
+
 
 img {
   max-width: 100%;

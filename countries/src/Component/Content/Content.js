@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
+
 import Loader from "react-loading-indicators";
 
 import Countries from "./Countries";
@@ -6,7 +8,9 @@ import Filter from "./Filter";
 
 import classes from "./Content.module.css";
 
-export default function Content({ mode }) {
+export default function Content() {
+  const mode = useSelector((state) => state.mode.colorMode);
+
   const [countries, setCountries] = useState([]);
   const [filterdCountries, setFilterdCountries] = useState([]);
 
@@ -136,7 +140,7 @@ export default function Content({ mode }) {
     );
   } else {
     content = (
-      <>
+      <main className={classes.content}>
         <Filter
           setSearch={setSearch}
           filterCountries={filterCountries}
@@ -152,11 +156,11 @@ export default function Content({ mode }) {
         ) : (
           <Countries countries={filterdCountries} mode={mode}></Countries>
         )}
-      </>
+      </main>
     );
   }
   return (
-    <main className={classes.container}>
+    <main className={`${classes.container} ${mode && classes.lightMode}`}>
       <div className={classes.content}>{content}</div>
     </main>
   );

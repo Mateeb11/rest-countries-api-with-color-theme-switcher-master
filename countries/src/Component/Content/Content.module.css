@@ -1,5 +1,15 @@
+.content {
+    max-width: var(--desktop);
+    margin: auto;
+}
+
 .container{
     min-height: 100vh;
+    background-color: var(--very-dark-blue);
+        transition: background-color 0.5s ease;
+}
+.container.lightMode {
+    background-color: var(--very-light-gray)
 }
 
 .centerStatus{

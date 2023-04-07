@@ -1,8 +1,18 @@
 import classes from "./Header.module.css";
 
 import { MaterialSymbol } from "react-material-symbols";
+import { useDispatch, useSelector } from "react-redux";
 
-const Header = ({ mode, setMode }) => {
+import { modeActions } from "../../store/mode-slice";
+import { useState } from "react";
+
+const Header = () => {
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.mode.colorMode);
+
+  const modeHandler = () => {
+    dispatch(modeActions.toggle(true));
+  };
   return (
     <header className={`${classes.header} ${mode && classes.lightMode}`}>
       <h2 className={`${classes.title} ${mode && classes.lightMode}`}>
@@ -11,7 +21,7 @@ const Header = ({ mode, setMode }) => {
       {mode ? (
         <div
           className={`${classes.mode} ${classes.lightMode}`}
-          onClick={() => setMode(false)}
+          onClick={modeHandler}
         >
           <MaterialSymbol
             icon="dark_mode"
@@ -24,7 +34,7 @@ const Header = ({ mode, setMode }) => {
           Dark mode
         </div>
       ) : (
-        <div className={classes.mode} onClick={() => setMode(true)}>
+        <div className={classes.mode} onClick={modeHandler}>
           <MaterialSymbol
             icon="light_mode"
             style={{
