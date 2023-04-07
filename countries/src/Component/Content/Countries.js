@@ -1,32 +1,36 @@
+import { Link } from "react-router-dom";
 import classes from "./Countries.module.css";
 
 const Countries = ({ countries, mode }) => {
   return (
     <main className={`${classes.container} ${mode && classes.lightMode}`}>
       {countries.map((countrie) => (
-        <section
+        <Link
           key={countrie.id}
-          className={`${classes.card} ${mode && classes.lightMode}`}
+          to={countrie.officalName}
+          className={classes.link}
         >
-          <img src={countrie.flag} alt={countrie.altText} />
-          <div className={classes.info}>
-            <p className={classes.name}>{countrie.officalName}</p>
-            <div>
-              <p className={classes.status}>
-                Population:
-                <span> {countrie.population.toLocaleString()}</span>
-              </p>
-              <p className={classes.status}>
-                Region:
-                <span> {countrie.region}</span>
-              </p>
-              <p className={classes.status}>
-                Capital:
-                <span> {countrie.capital}</span>
-              </p>
+          <section className={`${classes.card} ${mode && classes.lightMode}`}>
+            <img src={countrie.flag} alt={countrie.altText} />
+            <div className={classes.info}>
+              <p className={classes.name}>{countrie.officalName}</p>
+              <div>
+                <p className={classes.status}>
+                  Population:
+                  <span> {countrie.population.toLocaleString()}</span>
+                </p>
+                <p className={classes.status}>
+                  Region:
+                  <span> {countrie.region}</span>
+                </p>
+                <p className={classes.status}>
+                  Capital:
+                  <span> {countrie.capital}</span>
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </Link>
       ))}
     </main>
   );
