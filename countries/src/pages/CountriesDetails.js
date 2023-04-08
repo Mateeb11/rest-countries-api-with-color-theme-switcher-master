@@ -59,7 +59,7 @@ export default function CountriesDetailsPage() {
                 </p>
                 <p className={classes.status}>
                   Population:
-                  <span> {countries[0].population}</span>
+                  <span> {countries[0].population.toLocaleString()}</span>
                 </p>
                 <p className={classes.status}>
                   Region:
