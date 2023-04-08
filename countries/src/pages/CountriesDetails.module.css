@@ -1,5 +1,5 @@
 .main{
-    padding: 3em 0 0 5em;
+    padding: 3em 5em;
     background-color: var(--very-dark-blue);
     min-height: 100vh;
 }
@@ -10,18 +10,14 @@
     gap: 5em;
     padding: 3em 0em;
     color: var(--white);
-   
 }
 
 .image{
-    
-display: flex;
-
+    display: grid;
+    align-items: center;
 }
 .image img {
-   
     width: 100%;
-    
 }
 
 .countryInfo{
@@ -30,8 +26,6 @@ display: flex;
     gap: 2em;
     padding: 3em 5em 0 0;
     justify-content: space-evenly;
-    
-    max-height: 100%;
 }
 .info{
     display: grid;
@@ -59,19 +53,36 @@ display: flex;
     margin-block: 3em;
 }
 
-@media (max-width:1200px) {
+@media (max-width:1000px) {
     .main{
         padding: 3em 2em;
     }
     .container {
-        
         grid-template-columns: 1fr;
-        align-items: center;
         gap: 0;
     }
-
     .info {
         grid-auto-flow: row;
         gap: 2em;
+    }
+    .countryInfo{
+        padding: 3em 0; 
+    }
+    .image img {
+        width: 100%;
+    }
+}
+@media (max-width:300px){
+    .countryName {
+        font-weight: var(--font-weigts-bold);
+        font-size: var(--font-size-meduim);
+    }
+    .status {
+        font-weight: var(--font-weigts-regular);
+        font-size: var(--font-size-small);
+    }
+    .status span {
+        font-weight: var(--font-weigts-light);
+        font-size: var(--font-size-small);
     }
 }
