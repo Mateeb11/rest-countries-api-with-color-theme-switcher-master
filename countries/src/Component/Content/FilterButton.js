@@ -38,6 +38,7 @@ export default function FilterButton({ mode, setRegions }) {
       checkboxHandler(regions[i]);
     }
     numberOfRegions();
+    //reset the old data to the same states
   }, []);
 
   const regionFilter = (region) => {

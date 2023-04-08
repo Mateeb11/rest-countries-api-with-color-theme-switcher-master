@@ -30,9 +30,9 @@ export default function Content() {
     if (countries.length === 0) {
       fetchCountries(
         "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
-      );
+      ); //for some reason the first fetch doesn't set the countries array, so i make that runs untill the data is fetched
     }
-    filterCountries(search, regions);
+    filterCountries(search, regions); //apply region filter when going back to this route
   }, [countries]);
 
   const filterCountries = (search, regions) => {
