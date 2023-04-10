@@ -18,13 +18,14 @@
 }
 .image img {
     width: 100%;
+    aspect-ratio: 3/2;
 }
 
 .countryInfo{
     display: flex;
     flex-direction: column;
     gap: 2em;
-    padding: 3em 5em 0 0;
+   
     justify-content: space-evenly;
 }
 .info{
@@ -49,8 +50,11 @@
     font-size: var(--font-size-medium);
 }
 
-.border{
-    margin-block: 3em;
+.borderCountries{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
 }
 
 @media (max-width:1000px) {

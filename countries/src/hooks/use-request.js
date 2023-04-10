@@ -30,15 +30,15 @@ const useRequest = () => {
           commonName: data[key].name.common,
           population: data[key].population,
           region: data[key].region,
-          subregion: data[key].subregion,
+          subregion: data[key].subregion, //string
           capital:
             Object.keys(data[key].capital).length === 0
               ? "None"
-              : data[key].capital,
-          tld: data[key].tld,
-          currencies: { ...Object.values(data[key].currencies) },
+              : data[key].capital, //array
+          tld: data[key].tld, //array
+          currencies: { ...Object.values(data[key].currencies) }, //object
           languages: { ...Object.values(data[key].languages) },
-          borders: data[key].borders,
+          borders: data[key].borders, //array
         });
       }
       const loadedBorders = [];
@@ -64,7 +64,6 @@ const useRequest = () => {
       setCountries(loadedCountries);
 
       setLoading(false);
-      return loadedCountries;
     } catch (error) {
       if (error.message === "Failed to fetch")
         setErorrMessage("Failed to fetch data, try refreshing the page.");
@@ -72,6 +71,7 @@ const useRequest = () => {
       setErorr(true);
     }
   };
+
   return {
     countries,
     borders,

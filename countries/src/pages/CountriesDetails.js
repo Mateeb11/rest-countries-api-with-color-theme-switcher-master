@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import classes from "./CountriesDetails.module.css";
 import Button from "../Component/UI/button";
+import { MaterialSymbol } from "react-material-symbols";
 
 export default function CountriesDetailsPage() {
   const params = useParams();
@@ -24,18 +25,12 @@ export default function CountriesDetailsPage() {
     fetchCountries(`https://restcountries.com/v3.1/name/${params.countryId}`);
   }, [params.countryId]);
 
-  const getData = (feature, currencies = false, border = false) => {
+  const getData = (feature, currencies = false) => {
     let content = "";
     if (currencies) {
       for (let i = 0; i < Object.keys(feature).length; i++) {
         content += feature[i].name + ", ";
       }
-    } else if (border) {
-      for (let i = 0; i < Object.keys(feature).length; i++) {
-        content += <button>{feature[i]}</button>;
-      }
-      content = <> {content} + </>;
-      return content;
     } else {
       for (let i = 0; i < Object.keys(feature).length; i++) {
         content += feature[i] + ", ";
@@ -45,9 +40,6 @@ export default function CountriesDetailsPage() {
     return content.slice(0, -2);
   };
 
-  const getBorders = async (countryBorders) => {
-    // fetchCountries(`https://restcountries.com/v3.1/alpha/BEL`);
-  };
   // getBorders(countries[0].borders);
   let content = <></>;
 
@@ -56,7 +48,7 @@ export default function CountriesDetailsPage() {
   } else {
     content = countries.length !== 0 && (
       <main className={classes.main}>
-        <Button onClick={() => navigate(-1)}>back</Button>
+        <Button onClick={() => navigate(-1)}>Back</Button>
         <section className={classes.container}>
           <div className={classes.image}>
             <img src={countries[0].flag} alt={countries[0].altText} />
@@ -101,10 +93,13 @@ export default function CountriesDetailsPage() {
                 </p>
               </div>
             </div>
-            <div>
-              {borders.map((element, index) => {
-                return <Button key={index}>{element.country}</Button>;
-              })}
+            <div className={classes.borderCountries}>
+              Border Countires:
+              {borders.length === 0
+                ? " None"
+                : borders.map((element, index) => {
+                    return <Button key={index}>{element.country}</Button>;
+                  })}
             </div>
           </section>
         </section>
