@@ -5,6 +5,7 @@ const useRequest = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErorrMessage] = useState("");
   const [countries, setCountries] = useState([]);
+  const [borders, setBorders] = useState([]);
 
   //   useEffect(()=> {
 
@@ -40,6 +41,24 @@ const useRequest = () => {
           borders: data[key].borders,
         });
       }
+      const loadedBorders = [];
+
+      if (loadedCountries[0].borders !== undefined) {
+        for (let i = 0; i < loadedCountries[0].borders.length; i++) {
+          try {
+            const response = await fetch(
+              `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
+            );
+            const data = await response.json();
+
+            loadedBorders.push({
+              country: data[0].name.common,
+            });
+
+            setBorders(loadedBorders);
+          } catch {}
+        }
+      }
 
       setErorr(false);
       setCountries(loadedCountries);
@@ -53,10 +72,11 @@ const useRequest = () => {
       setErorr(true);
     }
   };
-
   return {
     countries,
+    borders,
     loading,
+    setLoading,
     fetchCountries,
     error,
     errorMessage,

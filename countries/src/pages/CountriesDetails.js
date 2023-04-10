@@ -1,15 +1,17 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import ErrorPage from "./Error";
 import useRequest from "../hooks/use-request";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import classes from "./CountriesDetails.module.css";
+import Button from "../Component/UI/button";
 
 export default function CountriesDetailsPage() {
   const params = useParams();
   const navigate = useNavigate();
   const {
     countries,
+    borders,
     loading,
     fetchCountries,
     error,
@@ -20,14 +22,20 @@ export default function CountriesDetailsPage() {
 
   useEffect(() => {
     fetchCountries(`https://restcountries.com/v3.1/name/${params.countryId}`);
-  }, []);
+  }, [params.countryId]);
 
-  const getData = (feature, currencies = false) => {
+  const getData = (feature, currencies = false, border = false) => {
     let content = "";
     if (currencies) {
       for (let i = 0; i < Object.keys(feature).length; i++) {
         content += feature[i].name + ", ";
       }
+    } else if (border) {
+      for (let i = 0; i < Object.keys(feature).length; i++) {
+        content += <button>{feature[i]}</button>;
+      }
+      content = <> {content} + </>;
+      return content;
     } else {
       for (let i = 0; i < Object.keys(feature).length; i++) {
         content += feature[i] + ", ";
@@ -37,6 +45,10 @@ export default function CountriesDetailsPage() {
     return content.slice(0, -2);
   };
 
+  const getBorders = async (countryBorders) => {
+    // fetchCountries(`https://restcountries.com/v3.1/alpha/BEL`);
+  };
+  // getBorders(countries[0].borders);
   let content = <></>;
 
   if (loading) {
@@ -44,7 +56,7 @@ export default function CountriesDetailsPage() {
   } else {
     content = countries.length !== 0 && (
       <main className={classes.main}>
-        <button onClick={() => navigate("..")}>back</button>
+        <Button onClick={() => navigate(-1)}>back</Button>
         <section className={classes.container}>
           <div className={classes.image}>
             <img src={countries[0].flag} alt={countries[0].altText} />
@@ -89,7 +101,11 @@ export default function CountriesDetailsPage() {
                 </p>
               </div>
             </div>
-            <button className={classes.border}>Hi</button>
+            <div>
+              {borders.map((element, index) => {
+                return <Button key={index}>{element.country}</Button>;
+              })}
+            </div>
           </section>
         </section>
       </main>
