@@ -1,13 +1,11 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import ErrorPage from "./Error";
+import { useParams, useNavigate } from "react-router-dom";
 import useRequest from "../hooks/use-request";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import classes from "./CountriesDetails.module.css";
 import Button from "../Component/UI/button";
-import { MaterialSymbol } from "react-material-symbols";
 import LoadingIndicator from "../Component/UI/Loader";
-import { useSelector } from "react-redux";
 
 export default function CountriesDetailsPage() {
   const mode = useSelector((state) => state.mode.colorMode);
@@ -48,7 +46,7 @@ export default function CountriesDetailsPage() {
     content = <LoadingIndicator mode={mode}></LoadingIndicator>;
   } else {
     content = countries.length !== 0 && (
-      <main className={classes.main}>
+      <main className={`${classes.main} ${mode && classes.lightMode}`}>
         <Button onClick={() => navigate(-1)}>Back</Button>
         <section className={classes.container}>
           <div className={classes.image}>

@@ -2,6 +2,11 @@
     padding: 3em 5em;
     background-color: var(--very-dark-blue);
     min-height: 100vh;
+    color: var(--white);
+}
+.main.lightMode {
+    color: var(--very-dark-blue-text);
+    background-color: var(--very-light-gray);
 }
 
 .container{
@@ -9,7 +14,6 @@
     grid-template-columns: 1fr 1fr;
     gap: 5em;
     padding: 3em 0em;
-    color: var(--white);
 }
 
 .image{

@@ -5,7 +5,6 @@ import "react-material-symbols/dist/rounded.css";
 
 import Content from "./pages/Content";
 import RootLayout from "./pages/Root";
-import ErrorPage from "./pages/Error";
 import CountriesDetailsPage from "./pages/CountriesDetails";
 
 const router = createBrowserRouter([

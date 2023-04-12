@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const useRequest = () => {
   const [error, setErorr] = useState(false);
@@ -15,30 +15,6 @@ const useRequest = () => {
         throw new Error();
       }
       return await response.json();
-      // const loadedBorders = [];
-
-      // if (loadedCountries[0].borders !== undefined) {
-      //   for (let i = 0; i < loadedCountries[0].borders.length; i++) {
-      //     try {
-      //       const response = await fetch(
-      //         `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
-      //       );
-      //       const data = await response.json();
-
-      //       loadedBorders.push({
-      //         country: data[0].name.common,
-      //       });
-
-      //       setBorders(loadedBorders);
-      //     } catch {}
-      //   }
-      //   setLoading(false);
-      // }
-
-      // setErorr(false);
-      // setCountries(loadedCountries);
-
-      // setLoading(false);
     } catch (error) {
       if (error.message === "Failed to fetch")
         setErorrMessage("Failed to fetch data, try refreshing the page.");
@@ -72,7 +48,7 @@ const useRequest = () => {
         region: data[key].region,
         subregion:
           data[key].subregion === undefined ? "None" : data[key].subregion, //string
-        capital: data[key].capital === undefined ? "None" : data[key].capital, //array
+        capital: data[key].capital === undefined ? ["None"] : data[key].capital, //array
         tld: data[key].tld, //array
         currencies:
           data[key].currencies === undefined
@@ -88,22 +64,20 @@ const useRequest = () => {
     const loadedBorders = [];
 
     try {
-      {
-        if (loadedCountries[0].borders !== undefined) {
-          for (let i = 0; i < loadedCountries[0].borders.length; i++) {
-            const response = await fetch(
-              `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
-            );
-            const data = await response.json();
+      if (loadedCountries[0].borders !== undefined) {
+        for (let i = 0; i < loadedCountries[0].borders.length; i++) {
+          const response = await fetch(
+            `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
+          );
+          const data = await response.json();
 
-            loadedBorders.push({
-              country: [data[0].name.common, data[0].name.official],
-            });
+          loadedBorders.push({
+            country: [data[0].name.common, data[0].name.official],
+          });
 
-            setBorders(loadedBorders);
-          }
-          setLoading(false);
+          setBorders(loadedBorders);
         }
+        setLoading(false);
       }
     } catch {}
 

@@ -4,7 +4,6 @@ import { MaterialSymbol } from "react-material-symbols";
 import { useDispatch, useSelector } from "react-redux";
 
 import { modeActions } from "../../store/mode-slice";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -14,6 +13,7 @@ const Header = () => {
   const modeHandler = () => {
     dispatch(modeActions.toggle(true));
   };
+
   return (
     <header className={`${classes.header} ${mode && classes.lightMode}`}>
       <Link style={{ textDecoration: "none" }} to="/">

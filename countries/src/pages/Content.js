@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import Countries from "../Component/Content/Countries";
@@ -14,7 +14,7 @@ export default function Content() {
   const {
     countries,
     loading,
-    fetchCountries,
+
     error,
     errorMessage,
     setErorr,
@@ -103,6 +103,7 @@ export default function Content() {
           filterCountries={filterCountries}
           mode={mode}
           setRegions={setRegions}
+          searchValue={search}
         ></Filter>
         {error ? (
           <div

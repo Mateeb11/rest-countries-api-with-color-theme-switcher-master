@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import classes from "./Filter.module.css";
 import { MaterialSymbol } from "react-material-symbols";
 
 import FilterButton from "./FilterButton";
 
-const Filter = ({ setSearch, setRegions, mode, searchValue }) => {
+const Filter = ({ setSearch, setRegions, mode }) => {
   const search = useRef("");
 
   const searchBoxHandler = () => {
@@ -19,6 +19,7 @@ const Filter = ({ setSearch, setRegions, mode, searchValue }) => {
       <form
         className={`${classes.searchBox}  ${mode && classes.lightMode}`}
         onClick={searchBoxHandler}
+        onSubmit={(e) => search.current.blur()}
       >
         <button
           className={`${classes.searchButton}  ${mode && classes.lightMode}`}
@@ -45,6 +46,7 @@ const Filter = ({ setSearch, setRegions, mode, searchValue }) => {
           onChange={searchHandler}
         />
       </form>
+
       <FilterButton mode={mode} setRegions={setRegions} />
     </section>
   );

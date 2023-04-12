@@ -25,7 +25,10 @@ const Countries = ({ countries, mode }) => {
                 </p>
                 <p className={classes.status}>
                   Capital:
-                  <span> {countrie.capital}</span>
+                  <span>
+                    {" "}
+                    {countrie.capital.length === 0 ? "None" : countrie.capital}
+                  </span>
                 </p>
               </div>
             </div>
