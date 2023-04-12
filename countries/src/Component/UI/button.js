@@ -6,7 +6,7 @@ export default function Button(props) {
   return (
     <>
       <Link
-        to={props.children !== "Back" && `/${props.children}`}
+        to={props.children !== "Back" && `/${props.link}`}
         onClick={props.onClick}
         className={classes.button}
       >

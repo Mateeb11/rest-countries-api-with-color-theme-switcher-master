@@ -42,7 +42,7 @@ const useRequest = () => {
     } catch (error) {
       if (error.message === "Failed to fetch")
         setErorrMessage("Failed to fetch data, try refreshing the page.");
-      else setErorrMessage(error.message);
+      else setErorrMessage("Page not found");
       setErorr(true);
     }
   };
@@ -53,8 +53,6 @@ const useRequest = () => {
 
     const loadedCountries = [];
     for (const key in data) {
-      console.log(data[key]);
-
       loadedCountries.push({
         id: key,
         flag: data[key].flags.png,
@@ -89,23 +87,25 @@ const useRequest = () => {
     }
     const loadedBorders = [];
 
-    if (loadedCountries[0].borders !== undefined) {
-      for (let i = 0; i < loadedCountries[0].borders.length; i++) {
-        try {
-          const response = await fetch(
-            `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
-          );
-          const data = await response.json();
+    try {
+      {
+        if (loadedCountries[0].borders !== undefined) {
+          for (let i = 0; i < loadedCountries[0].borders.length; i++) {
+            const response = await fetch(
+              `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
+            );
+            const data = await response.json();
 
-          loadedBorders.push({
-            country: data[0].name.common,
-          });
+            loadedBorders.push({
+              country: [data[0].name.common, data[0].name.official],
+            });
 
-          setBorders(loadedBorders);
-        } catch {}
+            setBorders(loadedBorders);
+          }
+          setLoading(false);
+        }
       }
-      setLoading(false);
-    }
+    } catch {}
 
     setCountries(loadedCountries);
     setLoading(false);

@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <ErrorPage />,
+
     children: [
       { index: true, element: <Content /> },
       { path: ":countryId", element: <CountriesDetailsPage /> },

@@ -56,6 +56,20 @@
     align-items: center;
     gap: 1em;
 }
+.centerStatus {
+    text-align: center;
+    font-size: var(--font-size-large);
+    background-color: var(--very-dark-blue);
+    height: 100vh;
+    color: var(--white);
+    padding: 5em 0;
+
+}
+
+.centerStatus.lightMode {
+    color: var(--very-dark-blue-text);
+    background-color: var(--white);
+}
 
 @media (max-width:1000px) {
     .main{

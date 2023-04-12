@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 
-import Loader from "react-loading-indicators";
-
 import Countries from "../Component/Content/Countries";
 import Filter from "../Component/Content/Filter";
 
 import classes from "./Content.module.css";
 import useRequest from "../hooks/use-request";
+import LoadingIndicator from "../Component/UI/Loader";
 
 export default function Content() {
   const mode = useSelector((state) => state.mode.colorMode);
@@ -95,15 +94,7 @@ export default function Content() {
       </div>
     );
   } else if (loading) {
-    content = (
-      <div className={classes.centerStatus}>
-        {mode ? (
-          <Loader style={{ color: "var(--very-dark-blue-text)" }} />
-        ) : (
-          <Loader color="white" />
-        )}
-      </div>
-    );
+    content = <LoadingIndicator mode={mode}></LoadingIndicator>;
   } else {
     content = (
       <main className={classes.content}>

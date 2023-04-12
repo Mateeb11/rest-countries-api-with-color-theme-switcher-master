@@ -6,21 +6,16 @@ import { useEffect, useState } from "react";
 import classes from "./CountriesDetails.module.css";
 import Button from "../Component/UI/button";
 import { MaterialSymbol } from "react-material-symbols";
+import LoadingIndicator from "../Component/UI/Loader";
+import { useSelector } from "react-redux";
 
 export default function CountriesDetailsPage() {
+  const mode = useSelector((state) => state.mode.colorMode);
+
   const params = useParams();
   const navigate = useNavigate();
-  const {
-    countries,
-    borders,
-    loading,
-    fetchCountries,
-    error,
-    errorMessage,
-    setErorr,
-    setErorrMessage,
-    setData,
-  } = useRequest();
+  const { countries, borders, loading, setData, error, errorMessage } =
+    useRequest();
 
   useEffect(() => {
     setData(`https://restcountries.com/v3.1/name/${params.countryId}`);
@@ -43,9 +38,14 @@ export default function CountriesDetailsPage() {
   };
 
   let content = <></>;
-
-  if (loading) {
-    content = <p>loading</p>;
+  if (error) {
+    content = (
+      <div className={`${classes.centerStatus} ${mode && classes.lightMode}`}>
+        {errorMessage.toString()}
+      </div>
+    );
+  } else if (loading) {
+    content = <LoadingIndicator mode={mode}></LoadingIndicator>;
   } else {
     content = countries.length !== 0 && (
       <main className={classes.main}>
@@ -99,7 +99,11 @@ export default function CountriesDetailsPage() {
               {borders.length === 0
                 ? " None"
                 : borders.map((element, index) => {
-                    return <Button key={index}>{element.country}</Button>;
+                    return (
+                      <Button key={index} link={element.country[1]}>
+                        {element.country[0]}
+                      </Button>
+                    );
                   })}
             </div>
           </section>

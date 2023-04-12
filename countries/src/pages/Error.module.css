@@ -1,0 +1,14 @@
+.error {
+    text-align: center;
+    font-size: var(--font-size-large);
+    height: 100vh;
+    color: var(--white);
+    background-color: var(--very-dark-blue);
+    padding: 5em 0;
+
+}
+
+.error.lightMode {
+    color: var(--very-dark-blue-text);
+    background-color: var(--white);
+}

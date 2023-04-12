@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { modeActions } from "../../store/mode-slice";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,11 @@ const Header = () => {
   };
   return (
     <header className={`${classes.header} ${mode && classes.lightMode}`}>
-      <h2 className={`${classes.title} ${mode && classes.lightMode}`}>
-        Where in the world?
-      </h2>
+      <Link style={{ textDecoration: "none" }} to="/">
+        <h2 className={`${classes.title} ${mode && classes.lightMode}`}>
+          Where in the world?
+        </h2>
+      </Link>
       {mode ? (
         <div
           className={`${classes.mode} ${classes.lightMode}`}
