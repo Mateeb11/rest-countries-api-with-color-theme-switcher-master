@@ -20,6 +20,7 @@ export default function Content() {
     errorMessage,
     setErorr,
     setErorrMessage,
+    setData,
   } = useRequest();
 
   const [filterdCountries, setFilterdCountries] = useState([]);
@@ -28,7 +29,7 @@ export default function Content() {
 
   useEffect(() => {
     if (countries.length === 0) {
-      fetchCountries(
+      setData(
         "https://restcountries.com/v3.1/all?fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders"
       ); //for some reason the first fetch doesn't set the countries array, so i make that runs untill the data is fetched
     }

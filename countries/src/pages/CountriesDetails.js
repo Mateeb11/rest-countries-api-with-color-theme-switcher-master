@@ -19,14 +19,16 @@ export default function CountriesDetailsPage() {
     errorMessage,
     setErorr,
     setErorrMessage,
+    setData,
   } = useRequest();
 
   useEffect(() => {
-    fetchCountries(`https://restcountries.com/v3.1/name/${params.countryId}`);
+    setData(`https://restcountries.com/v3.1/name/${params.countryId}`);
   }, [params.countryId]);
 
   const getData = (feature, currencies = false) => {
     let content = "";
+    if (feature === "None") return "None";
     if (currencies) {
       for (let i = 0; i < Object.keys(feature).length; i++) {
         content += feature[i].name + ", ";
@@ -40,7 +42,6 @@ export default function CountriesDetailsPage() {
     return content.slice(0, -2);
   };
 
-  // getBorders(countries[0].borders);
   let content = <></>;
 
   if (loading) {

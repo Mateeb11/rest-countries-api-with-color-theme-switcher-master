@@ -7,69 +7,108 @@ const useRequest = () => {
   const [countries, setCountries] = useState([]);
   const [borders, setBorders] = useState([]);
 
-  //   useEffect(()=> {
-
-  //   })
   const fetchCountries = async (url) => {
     try {
-      setLoading(true);
       const response = await fetch(url);
 
-      const data = await response.json();
-      const loadedCountries = [];
-      for (const key in data) {
-        loadedCountries.push({
-          id: key,
-          flag: data[key].flags.png,
-          altText: data[key].flags.alt,
-          officalName: data[key].name.official,
-          nativeName:
-            Object.keys(data[key].name.nativeName).length === 0
-              ? "None"
-              : Object.values(data[key].name.nativeName)[0].official,
-          commonName: data[key].name.common,
-          population: data[key].population,
-          region: data[key].region,
-          subregion: data[key].subregion, //string
-          capital:
-            Object.keys(data[key].capital).length === 0
-              ? "None"
-              : data[key].capital, //array
-          tld: data[key].tld, //array
-          currencies: { ...Object.values(data[key].currencies) }, //object
-          languages: { ...Object.values(data[key].languages) },
-          borders: data[key].borders, //array
-        });
+      if (!response.ok) {
+        throw new Error();
       }
-      const loadedBorders = [];
+      return await response.json();
+      // const loadedBorders = [];
 
-      if (loadedCountries[0].borders !== undefined) {
-        for (let i = 0; i < loadedCountries[0].borders.length; i++) {
-          try {
-            const response = await fetch(
-              `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
-            );
-            const data = await response.json();
+      // if (loadedCountries[0].borders !== undefined) {
+      //   for (let i = 0; i < loadedCountries[0].borders.length; i++) {
+      //     try {
+      //       const response = await fetch(
+      //         `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
+      //       );
+      //       const data = await response.json();
 
-            loadedBorders.push({
-              country: data[0].name.common,
-            });
+      //       loadedBorders.push({
+      //         country: data[0].name.common,
+      //       });
 
-            setBorders(loadedBorders);
-          } catch {}
-        }
-      }
+      //       setBorders(loadedBorders);
+      //     } catch {}
+      //   }
+      //   setLoading(false);
+      // }
 
-      setErorr(false);
-      setCountries(loadedCountries);
+      // setErorr(false);
+      // setCountries(loadedCountries);
 
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       if (error.message === "Failed to fetch")
         setErorrMessage("Failed to fetch data, try refreshing the page.");
       else setErorrMessage(error.message);
       setErorr(true);
     }
+  };
+
+  const setData = async (url) => {
+    setLoading(true);
+    const data = await fetchCountries(url);
+
+    const loadedCountries = [];
+    for (const key in data) {
+      console.log(data[key]);
+
+      loadedCountries.push({
+        id: key,
+        flag: data[key].flags.png,
+        altText: data[key].flags.alt,
+        officalName:
+          data[key].name.official === undefined
+            ? "None"
+            : data[key].name.official,
+        nativeName:
+          data[key].name.nativeName === undefined ||
+          Object.values(data[key].name.nativeName).length === 0
+            ? "None"
+            : Object.values(data[key].name.nativeName)[0].official,
+        commonName: data[key].name.common,
+        population:
+          data[key].population === undefined ? "None" : data[key].population,
+        region: data[key].region,
+        subregion:
+          data[key].subregion === undefined ? "None" : data[key].subregion, //string
+        capital: data[key].capital === undefined ? "None" : data[key].capital, //array
+        tld: data[key].tld, //array
+        currencies:
+          data[key].currencies === undefined
+            ? "None"
+            : Object.values(data[key].currencies), //object
+        languages:
+          data[key].languages === undefined
+            ? "None"
+            : Object.values(data[key].languages),
+        borders: data[key].borders, //array
+      });
+    }
+    const loadedBorders = [];
+
+    if (loadedCountries[0].borders !== undefined) {
+      for (let i = 0; i < loadedCountries[0].borders.length; i++) {
+        try {
+          const response = await fetch(
+            `https://restcountries.com/v3.1/alpha/${loadedCountries[0].borders[i]}`
+          );
+          const data = await response.json();
+
+          loadedBorders.push({
+            country: data[0].name.common,
+          });
+
+          setBorders(loadedBorders);
+        } catch {}
+      }
+      setLoading(false);
+    }
+
+    setCountries(loadedCountries);
+    setLoading(false);
   };
 
   return {
@@ -82,6 +121,7 @@ const useRequest = () => {
     errorMessage,
     setErorr,
     setErorrMessage,
+    setData,
   };
 };
 
