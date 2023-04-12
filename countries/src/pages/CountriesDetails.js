@@ -93,16 +93,18 @@ export default function CountriesDetailsPage() {
               </div>
             </div>
             <div className={classes.borderCountries}>
-              Border Countires:
-              {borders.length === 0
-                ? " None"
-                : borders.map((element, index) => {
-                    return (
-                      <Button key={index} link={element.country[1]}>
-                        {element.country[0]}
-                      </Button>
-                    );
-                  })}
+              <p>Border Countires:</p>
+              <div className={classes.borderCountries}>
+                {borders.length === 0
+                  ? " None"
+                  : borders.map((element, index) => {
+                      return (
+                        <Button key={index} link={element.country[1]}>
+                          {element.country[0]}
+                        </Button>
+                      );
+                    })}
+              </div>
             </div>
           </section>
         </section>
