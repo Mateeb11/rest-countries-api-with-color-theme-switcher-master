@@ -96,7 +96,7 @@ export default function CountriesDetailsPage() {
               <p>Border Countires:</p>
               <div className={classes.borderCountries}>
                 {borders.length === 0
-                  ? " None"
+                  ? "None"
                   : borders.map((element, index) => {
                       return (
                         <Button key={index} link={element.country[1]}>

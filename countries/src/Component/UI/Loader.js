@@ -4,7 +4,7 @@ import classes from "./Loader.module.css";
 
 export default function LoadingIndicator({ mode }) {
   return (
-    <div className={classes.centerStatus}>
+    <div className={`${classes.centerStatus} ${mode && classes.lightMode}`}>
       {mode ? (
         <Loader style={{ color: "var(--very-dark-blue-text)" }} />
       ) : (
