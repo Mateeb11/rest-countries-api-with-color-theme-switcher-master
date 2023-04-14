@@ -51,7 +51,7 @@ Light Mode
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [Frontedn mentor](https://www.frontendmentor.io/solutions/rest-countries-api-with-color-theme-switcher-solution-mR--3dT2Ev)
 - Live Site URL: [Where in the world?](https://humdrum-smell.surge.sh/)
 
 ## My process
